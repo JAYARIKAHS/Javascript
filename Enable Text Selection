@@ -1,0 +1,36 @@
+(
+function (w)
+{
+	const d = w.document;
+	const e = ['contextmenu', 'selectstart', 'select', 'mousedown', 'mouseup'];
+
+	for (let i = 0; i < e.length; i++)
+	{
+		d['on' + e[i]] = null;
+	}
+
+	const s = w.getSelection && w.getSelection();
+
+	if (s && s.removeAllRanges)
+	{
+		s.removeAllRanges();
+	}
+	else if (d.selection && d.selection.clear)
+	{
+		d.selection.clear();
+	}
+
+	const style = d.documentElement.style;
+	style.cursor = '';
+	style.webkitTouchCallout = 'none';
+	style.userSelect = 'none';
+	const b = w.jQuery || w.Zepto;
+
+	if (b)
+	{
+		b(w).off(e.join(' '));
+	}
+}
+
+(this)
+);
